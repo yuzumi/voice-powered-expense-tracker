@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import reportWebVitals from 'reportWebVitals';
 
 import 'index.css';
 import App from 'App';
-import reportWebVitals from 'reportWebVitals';
+import { ExpenseTrackerProvider } from 'context/ExpenseTrackerContext';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ExpenseTrackerProvider>
     <App />
-  </React.StrictMode>,
+  </ExpenseTrackerProvider>,
   document.getElementById('root')
 );
 
