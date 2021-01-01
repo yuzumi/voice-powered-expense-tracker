@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardHeader, CardContent, Typography, Grid, Divider } from '@material-ui/core';
 
 import Form from 'components/Form';
-import List from 'components/List';
+import TransactionList from 'components/TransactionList';
 
 import useStyles from 'components/Main/styles';
 
@@ -37,7 +37,7 @@ const Main = () => {
       <CardContent className={classes.cartContent}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <List />
+            <TransactionList />
           </Grid>
         </Grid>
       </CardContent>
