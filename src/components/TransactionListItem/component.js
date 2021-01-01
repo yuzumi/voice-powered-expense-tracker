@@ -14,7 +14,7 @@ import useStyles from 'components/TransactionListItem/styles';
 const TransactionListItem = forwardRef(({ transaction, onDelete }, ref) => {
   const classes = useStyles();
 
-  const avatarClassName = transaction.type === 'income'
+  const avatarClassName = transaction.type === 'Income'
     ? classes.avatarIncome
     : classes.avatarExpense;
 

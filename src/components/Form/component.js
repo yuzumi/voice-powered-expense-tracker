@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { TextField, Typography, Grid, Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 import { useExpenseTracker } from 'context/ExpenseTrackerContext';
-
+import { incomeCategories, expenseCategories } from 'constants/categories';
 import useStyles from 'components/Form/styles';
 
 const initialState = {
   amount: 0,
   category: '',
-  type: 'income',
+  type: 'Income',
   date: new Date()
 };
 
@@ -18,6 +18,10 @@ const Form = () => {
   const [formData, setFormData] = useState(initialState);
 
   const { addTransaction } = useExpenseTracker();
+
+  const selectedCategories = formData.type === 'Income'
+    ? incomeCategories
+    : expenseCategories;
 
   const handleTypeChange = (event) => {
     setFormData({
@@ -70,8 +74,8 @@ const Form = () => {
             value={formData.type}
             onChange={handleTypeChange}
           >
-            <MenuItem value="income">Income</MenuItem>
-            <MenuItem value="expense">Expense</MenuItem>
+            <MenuItem value="Income">Income</MenuItem>
+            <MenuItem value="Expense">Expense</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -82,8 +86,14 @@ const Form = () => {
             value={formData.category}
             onChange={handleCategoryChange}
           >
-            <MenuItem value="business">Business</MenuItem>
-            <MenuItem value="salary">Salary</MenuItem>
+            {selectedCategories.map(category => (
+              <MenuItem 
+                key={category.type}
+                value={category.type}
+              >
+                {category.type}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
