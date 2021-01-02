@@ -1,6 +1,8 @@
 import React, { useReducer, useContext, createContext } from 'react';
 import { nanoid } from 'nanoid';
 
+import { incomeCategories, expenseCategories } from 'constants/categories';
+
 const initialState = [];
 
 export const ExpenseTrackerContext = createContext(initialState);
@@ -47,3 +49,30 @@ export const ExpenseTrackerProvider = ({ children }) => {
 };
 
 export const useExpenseTracker = () => useContext(ExpenseTrackerContext);
+
+export const useTransactionsChart = (type) => {
+  const context = useExpenseTracker();
+
+  const transactions = context.transactions.filter(transaction => transaction.type === type);
+
+  const total = transactions.reduce((total, transaction) => total + parseFloat(transaction.amount), 0);
+
+  const categories = type === 'Income'
+    ? incomeCategories
+    : expenseCategories;
+
+  const data = transactions.reduce((data, transaction) => ({
+    ...data,
+    [transaction.category]: (data[transaction.category] || 0) + transaction.amount
+  }), {})
+
+  const chartData = {
+    labels: Object.keys(data),
+    datasets: [{
+      data: Object.values(data),
+      backgroundColor: Object.keys(data).map(categoryName => categories.find(category => category.type === categoryName).color)
+    }]
+  };
+
+  return { total, chartData };
+};
